@@ -38,20 +38,21 @@ using n_time = std::chrono::high_resolution_clock;
             bias = sqrt(((i-average) * (i-average)) / n_readings);
         }
         
-        return bias;
+        return average;
     }
 
     
 //----------------------------------------------------------------------
     
-    int gyro::angle_add (){ //fix
+    int gyro::angle_add (){
         
-        double angle_pos = std::abs((gyro_z() - bias)) * msleep(1);
+        double angle_pos = std::abs((gyro_z() - average)) * 10;
         return angle_pos;
     }
     
 //----------------------------------------------------------------------
 
+    // this one kinda sucks
 
     void gyro::turn(double t_theta, int l_speed, int r_speed){ //fix
         
@@ -68,9 +69,29 @@ using n_time = std::chrono::high_resolution_clock;
         msleep(200);
     }
 
+    // attempt 2, only works for positive angles at the moment i.e. clockwise
+
+    void gyro::angle_turn(int angleTheta){
+        
+        int DEG_TO_RAD = 600;
+        int currentTheta = gyro_z();
+        
+        direction = (angleTheta > 0) ? 1 : -1;
+        
+        drive(direction * 300, -direction * 300);
+        
+        while (currentTheta < angleTheta * DEG_TO_RAD){
+            currentTheta += angle_add();
+            msleep(1);
+        }
+        
+    }
+
     
 //----------------------------------------------------------------------
     
+    // needs to be fixed and tested
+
     inline double gyro::correction (double angle){
         
         double c = angle * expm1(angle);
@@ -88,7 +109,7 @@ using n_time = std::chrono::high_resolution_clock;
     double gyro::c_angle() {
         
         double theta = 0.0;
-        const double con = 0.0; //fix conversion value
+        const double con = 2600; //fix conversion might not be accurate
         return theta / con;
         
     }

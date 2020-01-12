@@ -11,7 +11,6 @@
 #include <kipr/botball.h>
 
 
-int msleep(int x){return x;}
 void drive(double ls, double rs){
     
     mav(0, ls);

@@ -16,7 +16,6 @@
 #include <kipr/botball.h>
 #include <iostream>
 
-int msleep(int x);
 void drive(double ls, double rs);
 static constexpr double pi = double(M_PI);
 
