@@ -22,6 +22,7 @@ class gyro{
     int gyro_r();
     int angle_add();
     void turn(double t_theta, int l_speed, int r_speed);
+    void angle_turn(int angleTheta);
     inline double correction (double angle);
     auto duration();
     virtual double c_angle();
