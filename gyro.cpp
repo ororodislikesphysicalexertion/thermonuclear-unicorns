@@ -74,16 +74,20 @@ using n_time = std::chrono::high_resolution_clock;
     void gyro::angle_turn(int angleTheta){
         
         int DEG_TO_RAD = 600;
-        int currentTheta = gyro_z();
+        int currentTheta = 0;
         
         direction = (angleTheta > 0) ? 1 : -1;
         
         drive(direction * 300, -direction * 300);
         
         while (currentTheta < angleTheta * DEG_TO_RAD){
-            currentTheta += angle_add();
-            msleep(1);
+            currentTheta += std::abs(gyro_z());
+            std::cout << gyroCurrent << std::endl;
+            msleep(10);
         }
+        
+        drive(0,0);
+        msleep(1000);
         
     }
 
