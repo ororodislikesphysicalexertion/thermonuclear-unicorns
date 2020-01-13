@@ -76,7 +76,7 @@ using n_time = std::chrono::high_resolution_clock;
         int DEG_TO_RAD = 600;
         int currentTheta = 0;
         
-        direction = (angleTheta > 0) ? 1 : -1;
+        int direction = (angleTheta > 0) ? 1 : -1;
         
         drive(direction * 300, -direction * 300);
         
