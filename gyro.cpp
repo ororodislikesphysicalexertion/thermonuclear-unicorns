@@ -69,7 +69,7 @@ using n_time = std::chrono::high_resolution_clock;
         msleep(200);
     }
 
-    // attempt 2, only works for positive angles at the moment i.e. clockwise
+// this one works!!!!! yaaaaayyyy :)))
 
     void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negative is clockwise
         double DEG_TO_RAD = 600;
