@@ -71,25 +71,33 @@ using n_time = std::chrono::high_resolution_clock;
 
     // attempt 2, only works for positive angles at the moment i.e. clockwise
 
-    void gyro::angle_turn(int angleTheta){
+    void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negative is clockwise
+        double DEG_TO_RAD = 600;
+         double gyroCurrent = 0;
         
-        int DEG_TO_RAD = 600;
-        int currentTheta = 0;
-        
-        int direction = (angleTheta > 0) ? 1 : -1;
+        int direction = angleDegrees < 0 ? -1 : 1;
         
         drive(direction * 300, -direction * 300);
         
-        while (currentTheta < angleTheta * DEG_TO_RAD){
-            currentTheta += std::abs(gyro_z());
-            std::cout << gyroCurrent << std::endl;
-            msleep(10);
+        if(angleDegrees < 0){
+                while (gyroCurrent >=  angleDegrees * DEG_TO_RAD) { // no point in multiplying angleDegress with direction
+                    gyroCurrent -= std::abs(gyro_z()); // subtract for negative degrees, add for positive degrees
+                    std::cout << gyroCurrent << std::endl;
+                    msleep(10);
+                }
         }
         
-        drive(0,0);
-        msleep(1000);
-        
+        else if(angleDegrees > 0){
+            while (gyroCurrent <=  angleDegrees * DEG_TO_RAD) { // no point in multiplying angleDegress with direction
+                    gyroCurrent += std::abs(gyro_z()); // subtract for negative degrees, add for positive degrees
+                    std::cout << gyroCurrent << std::endl;
+                    msleep(10);
+                }
+        }
+        drive(0, 0);
+         msleep(1000);
     }
+
 
     
 //----------------------------------------------------------------------
