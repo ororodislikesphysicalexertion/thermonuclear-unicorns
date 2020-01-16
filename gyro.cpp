@@ -118,6 +118,7 @@ using n_time = std::chrono::high_resolution_clock;
         return std::chrono::duration_cast<std::chrono::milliseconds>(c_time - start).count();
     }
     
+    //unnecessary
     double gyro::c_angle() {
         
         double theta = 0.0;
@@ -125,7 +126,8 @@ using n_time = std::chrono::high_resolution_clock;
         return theta / con;
         
     }
-    
+
+    // idk if this function works or makes sense   
     void gyro::straight (double distance, double velocity){
         
         double i_angle = c_angle();
@@ -146,6 +148,28 @@ using n_time = std::chrono::high_resolution_clock;
         }
         
         drive(0, 0);
+    }
+
+    //i hope this one works and makes sense
+    void gyro::angle_straight(int distance, int speed){ //enter distance in cm, it gets multiplied by 95.1 to convert to KIPR units
+    	double TO_CM = 95.1; //found motor position ticks per centimeter
+        int time = (TO_CM * distance) / speed;
+        const int initialAngle = 0;
+        int differenceAngle = std::abs(initialAngle - gyro_z());
+        
+        if(differenceAngle > initialAngle){
+        	double speed_1 = speed * (1 + differenceAngle);
+        	double speed_2 = speed * (1 - differenceAngle);
+        	drive(speed_1, speed_2);
+            msleep(time);
+        }
+        
+        if(differenceAngle < initialAngle){
+        	double speed_1 = speed * (1 - differenceAngle);
+        	double speed_2 = speed * (1 + differenceAngle);
+        	drive(speed_1, speed_2);
+            msleep(time);
+        }
     }
 
     
