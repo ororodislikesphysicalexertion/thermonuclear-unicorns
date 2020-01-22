@@ -1,9 +1,9 @@
 //
 //  gyro.cpp
-//  botball2020
+//  botball
 //
-//  Created by QA on 1/5/20.
-//  Copyright © 2020 oroni club. All rights reserved.
+//  Created by QA on 5/29/19.
+//  Copyright B) 2019 oroni club. All rights reserved.
 //
 
 #include "gyro.hpp"
@@ -28,6 +28,7 @@ using n_time = std::chrono::high_resolution_clock;
         for(int i = 0; i < n_readings; i++) {
             
             gyro_reading.push_back(gyro_z());
+          //  std::cout<< gyro_z() <<std::endl;
             msleep(1);
             
         }
@@ -53,7 +54,10 @@ using n_time = std::chrono::high_resolution_clock;
 //----------------------------------------------------------------------
 
     // this one kinda sucks
+<<<<<<< HEAD
 
+=======
+>>>>>>> jll
     void gyro::turn(double t_theta, int l_speed, int r_speed){ //fix
         
         double theta = 0.0;
@@ -69,8 +73,12 @@ using n_time = std::chrono::high_resolution_clock;
         msleep(200);
     }
 
+<<<<<<< HEAD
 // this one works!!!!! yaaaaayyyy :)))
 
+=======
+    // this one works!!!!! yaaaaayyyy :)))
+>>>>>>> jll
     void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negative is clockwise
         double DEG_TO_RAD = 600;
          double gyroCurrent = 0;
@@ -97,6 +105,7 @@ using n_time = std::chrono::high_resolution_clock;
         drive(0, 0);
          msleep(1000);
     }
+<<<<<<< HEAD
 
 
     
@@ -104,9 +113,14 @@ using n_time = std::chrono::high_resolution_clock;
     
     // needs to be fixed and tested
 
+=======
+//----------------------------------------------------------------------
+  
+    // needs to be fixed and tested
+>>>>>>> jll
     inline double gyro::correction (double angle){
         
-        double c = angle * expm1(angle);
+        double c = exp(angle);
         return c;
     }
 
@@ -117,17 +131,30 @@ using n_time = std::chrono::high_resolution_clock;
         
         return std::chrono::duration_cast<std::chrono::milliseconds>(c_time - start).count();
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> jll
     //unnecessary
     double gyro::c_angle() {
         
         double theta = 0.0;
+<<<<<<< HEAD
         const double con = 2600; //fix conversion might not be accurate
         return theta / con;
         
     }
 
     // idk if this function works or makes sense   
+=======
+        const double con = 53800;
+        return theta / con;
+        
+    }
+    
+    // idk if this function works or makes sense
+>>>>>>> jll
     void gyro::straight (double distance, double velocity){
         
         double i_angle = c_angle();
@@ -150,6 +177,7 @@ using n_time = std::chrono::high_resolution_clock;
         drive(0, 0);
     }
 
+<<<<<<< HEAD
     //i hope this one works and makes sense
     void gyro::angle_straight(int distance, int speed){ //enter distance in cm, it gets multiplied by 95.1 to convert to KIPR units
     	double TO_CM = 95.1; //found motor position ticks per centimeter
@@ -176,4 +204,28 @@ using n_time = std::chrono::high_resolution_clock;
     
 
 
+=======
+>>>>>>> jll
 
+    //i hope this one works and makes sense
+    void gyro::angle_straight(int distance, int speed){ //enter distance in cm, it gets multiplied by 95.1 to convert to KIPR units
+        double TO_CM = 95.1; //found motor position ticks per centimeter
+        int time = (TO_CM * distance) / speed;
+        int timeConversion = 1000;
+        const int initialAngle = 0;
+        int differenceAngle = std::abs(initialAngle - gyro_z());
+        
+        if(differenceAngle > initialAngle){
+            double speed_1 = speed * (1 + correction(differenceAngle)); //test correction(differenceAngle)
+            double speed_2 = speed * (1 - correction(differenceAngle));// maybe try with normal value first
+            drive(speed_1, speed_2);
+            msleep(time * timeConversion);
+        }
+        
+        if(differenceAngle < initialAngle){
+            double speed_1 = speed * (1 - correction(differenceAngle));
+            double speed_2 = speed * (1 + correction(differenceAngle));
+            drive(speed_1, speed_2);
+            msleep(time * timeConversion);
+        }
+    }

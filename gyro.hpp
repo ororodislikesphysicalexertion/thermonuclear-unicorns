@@ -22,11 +22,16 @@ class gyro{
     int gyro_r();
     int angle_add();
     void turn(double t_theta, int l_speed, int r_speed);
+<<<<<<< HEAD
     void angle_turn(int angleTheta);
+=======
+    void turn_angle(int angleDegrees);
+>>>>>>> jll
     inline double correction (double angle);
     auto duration();
     virtual double c_angle();
     void straight (double distance, double velocity);
+    void angle_straight(int distance, int speed);
 
 };
 
