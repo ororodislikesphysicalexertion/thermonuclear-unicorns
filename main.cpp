@@ -24,3 +24,30 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
+
+//create hard code
+create_connect();
+  enable_servos();
+  set_servo_position(0, 1024);
+  msleep(1000);
+  create_drive_straight(-100);
+  msleep(2000);
+  create_drive_straight(0);
+  msleep(1000);
+  set_servo_position(1, 288);
+  msleep(1000);
+  create_drive_straight(-100);
+  msleep(3000);
+  set_servo_position(1, 1248);
+  msleep(1000);
+  create_drive_straight(-75);
+  msleep(500);
+  set_servo_position(0, 1486);
+  msleep(1500);
+  create_drive_straight(-50);
+  msleep(1000);
+  set_servo_position(0, 1020);
+  msleep(1000);
+  disable_servos();
+  create_disconnect();
+
