@@ -150,7 +150,7 @@ using n_time = std::chrono::high_resolution_clock;
 
 
     //i hope this one works and makes sense
-    void gyro::angle_straight(int distance, int speed){ //enter distance in cm, it gets multiplied by 95.1 to convert to KIPR units
+    	void gyro::angle_straight(int distance, int speed){ //enter distance in cm, it gets multiplied by 95.1 to convert to KIPR units
     	double TO_CM = 95.1; //found motor position ticks per centimeter
         int time = ((TO_CM * distance) / speed) * 1000; // milliseconds
         double currentAngle = 0;
@@ -158,26 +158,22 @@ using n_time = std::chrono::high_resolution_clock;
         
         while(duration() < time){
         
-        if(differenceAngle > initialAngle){
+        if(speed > 0){
         	double speed_1 = speed * (1 + correction(currentAngle)); //test correction(differenceAngle)
         	double speed_2 = speed * (1 - correction(currentAngle));// maybe try with normal value first
         	drive(speed_1, speed_2);
             
         }
         
-        if(differenceAngle < initialAngle){
+        else{
         	double speed_1 = speed * (1 - correction(currentAngle));
         	double speed_2 = speed * (1 + correction(currentAngle));
         	drive(speed_1, speed_2);
             
         }
             msleep(time);
-            currentAngle += std::abs(gyro_z()) * 10;
+            currentAngle += angle_add();
         }
     }
-
-    
-    
-
 
 
