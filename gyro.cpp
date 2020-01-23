@@ -156,7 +156,7 @@ using n_time = std::chrono::high_resolution_clock;
         double currentAngle = 0;
     //    int differenceAngle = std::abs(initialAngle - gyro_z());
         
-        while(time < duration()){
+        while(duration() < time){
         
         if(differenceAngle > initialAngle){
         	double speed_1 = speed * (1 + correction(currentAngle)); //test correction(differenceAngle)
