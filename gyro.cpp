@@ -142,7 +142,8 @@ void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negat
 //----------------------------------------------------------------------
     
 //straight function
-// this function WORKS but it'll go straight forever... so uh...
+
+// this function WORKS
 	void gyro::angle_straight(int distance, int speed){ //enter distance in cm, it gets multiplied by 95.1 to convert to KIPR units
     	double TO_CM = 95.1; //found motor position ticks per centimeter
         int time = ((TO_CM * distance) / speed) * 1000; // milliseconds
@@ -168,6 +169,9 @@ void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negat
             msleep(time);
             currentAngle += angle_add();
         }
+					  
+	drive(0, 0);
+        msleep(1000);
     }
 
     
