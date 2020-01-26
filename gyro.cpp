@@ -138,33 +138,10 @@ void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negat
         return theta / con;
         
     }
-    
-//straight functions
 
-// this one sucks and doesn't woHkK
-    void gyro::straight (double distance, double velocity){
-        
-        double i_angle = c_angle();
-        double d_angle = c_angle() - i_angle;
-        double t_time = std::abs(distance / velocity);
-        
-        while(duration() < t_time)
-            angle_add();
-        if(c_angle() > i_angle){
-            double speed_1 = velocity * (1 + correction(d_angle));
-            double speed_2 = velocity * (1 - correction(d_angle));
-            drive(speed_1, speed_2);
-        }
-        else if(c_angle() < i_angle){
-            double speed_1 = velocity * (1 - correction(d_angle));
-            double speed_2 = velocity * (1 + correction(d_angle));
-            drive(speed_1, speed_2);
-        }
-        
-        drive(0, 0);
-    }
-
+//----------------------------------------------------------------------
     
+//straight function
 // this function WORKS but it'll go straight forever... so uh...
 	void gyro::angle_straight(int distance, int speed){ //enter distance in cm, it gets multiplied by 95.1 to convert to KIPR units
     	double TO_CM = 95.1; //found motor position ticks per centimeter
