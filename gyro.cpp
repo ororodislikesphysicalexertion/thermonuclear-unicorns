@@ -37,7 +37,7 @@ auto gyro::duration(){
 //----------------------------------------------------------------------
 
 
-	//finding the bias
+	//finding the gyro bias
     
     int gyro::gyro_r(){
         double n_readings = 100;
@@ -62,7 +62,9 @@ auto gyro::duration(){
     
 //----------------------------------------------------------------------
     
-    int gyro::angle_add (){ //fix
+// incremental function
+
+    int gyro::angle_add (){ 
         
         double angle_pos = std::abs(gyro_z() - average) * 10;
         return angle_pos;
@@ -70,7 +72,9 @@ auto gyro::duration(){
     
 //----------------------------------------------------------------------
 
+//turn function
 
+// this one doesn't work and sucks
     void gyro::turn(double t_theta, int l_speed, int r_speed){ //fix
         
         double theta = 0.0;
@@ -86,48 +90,8 @@ auto gyro::duration(){
         msleep(200);
     }
 
-    
-//----------------------------------------------------------------------
-    
-    inline double gyro::correction (double angle){
-        
-        double c = exp(angle);
-        return c;
-    }
-
-//----------------------------------------------------------------------
-    
-    double gyro::c_angle() {
-        
-        double theta = 0.0;
-        const double con = 53800; 
-        return theta / con;
-        
-    }
-    
-  //  void gyro::straight (double distance, double velocity){
-        
-  //      double i_angle = c_angle();
-  //      double d_angle = c_angle() - i_angle;
-  //      double t_time = std::abs(distance / velocity);
-        
-  //      while(duration() < t_time)
-  //          angle_add();
-  //      if(c_angle() > i_angle){
-  //          double speed_1 = velocity * (1 + correction(d_angle));
-  //          double speed_2 = velocity * (1 - correction(d_angle));
-  //          drive(speed_1, speed_2);
-  //      }
-  //      else if(c_angle() < i_angle){
-  //          double speed_1 = velocity * (1 - correction(d_angle));
-  //          double speed_2 = velocity * (1 + correction(d_angle));
-  //          drive(speed_1, speed_2);
-  //      }
-        
-  //      drive(0, 0);
-  //  }
-
-    void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negative is clockwise
+//this one works and is awesome, just needs some conversion value adjustments
+void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negative is clockwise
         double DEG_TO_RAD = 600;
      	double gyroCurrent = 0;
         
@@ -152,8 +116,56 @@ auto gyro::duration(){
         }
         drive(0, 0);
      	msleep(1000);
+    }	
+    
+//----------------------------------------------------------------------
+
+//curve function to make robot straight
+
+    inline double gyro::correction (double angle){
+        
+        double c = exp(angle);
+        return c;
     }
 
+//----------------------------------------------------------------------
+  
+//useless conversion function ngl
+    double gyro::c_angle() {
+        
+        double theta = 0.0;
+        const double con = 53800; 
+        return theta / con;
+        
+    }
+    
+//straight functions
+
+// this one sucks and doesn't woHkK
+    void gyro::straight (double distance, double velocity){
+        
+        double i_angle = c_angle();
+        double d_angle = c_angle() - i_angle;
+        double t_time = std::abs(distance / velocity);
+        
+        while(duration() < t_time)
+            angle_add();
+        if(c_angle() > i_angle){
+            double speed_1 = velocity * (1 + correction(d_angle));
+            double speed_2 = velocity * (1 - correction(d_angle));
+            drive(speed_1, speed_2);
+        }
+        else if(c_angle() < i_angle){
+            double speed_1 = velocity * (1 - correction(d_angle));
+            double speed_2 = velocity * (1 + correction(d_angle));
+            drive(speed_1, speed_2);
+        }
+        
+        drive(0, 0);
+    }
+
+    
+// this function WORKS but it'll go straight forever... so uh...
 	void gyro::angle_straight(int distance, int speed){ //enter distance in cm, it gets multiplied by 95.1 to convert to KIPR units
     	double TO_CM = 95.1; //found motor position ticks per centimeter
         int time = ((TO_CM * distance) / speed) * 1000; // milliseconds
@@ -164,15 +176,15 @@ auto gyro::duration(){
         
         if(speed > 0){
             //try with normal values first, like 10
-        	double speed_1 = speed + 10; //speed * (1 + correction(currentAngle)
-        	double speed_2 = speed - 10;// speed * (1 - correction(currentAngle)
+        	double speed_1 = speed * (1 + correction(currentAngle);
+        	double speed_2 = speed * (1 - correction(currentAngle);
         	drive(speed_1, speed_2);
             
         }
         
         else{
-        	double speed_1 = speed - 10; //speed * (1 - correction(currentAngle)
-        	double speed_2 = speed + 10; // speed * (1 + correction(currentAngle)
+        	double speed_1 = speed * (1 - correction(currentAngle);
+        	double speed_2 = speed * (1 + correction(currentAngle);
         	drive(speed_1, speed_2);
             
         }
