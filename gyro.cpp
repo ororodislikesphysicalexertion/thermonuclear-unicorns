@@ -124,7 +124,7 @@ void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negat
 
     inline double gyro::correction (double angle){
         
-        double c = exp(angle);
+        double c = angle * exp(angle);
         return c;
     }
 
