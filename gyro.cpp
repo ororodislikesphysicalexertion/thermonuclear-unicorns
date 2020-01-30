@@ -146,7 +146,7 @@ void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negat
 // this function WORKS
 	void gyro::angle_straight(int distance, int speed){ //enter distance in cm, it gets multiplied by 95.1 to convert to KIPR units
     	double TO_CM = 95.1; //found motor position ticks per centimeter
-        int time = ((TO_CM * distance) / speed) * 1000; // milliseconds
+        int time = ((TO_CM * distance) / std::abs(speed)) * 1000; // milliseconds
         double currentAngle = 0;
     //    int differenceAngle = std::abs(initialAngle - gyro_z());
         
