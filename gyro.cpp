@@ -154,15 +154,15 @@ void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negat
         
         if(speed > 0){
             //try with normal values first, like 10
-        	double speed_1 = speed * (1 + correction(currentAngle);
-        	double speed_2 = speed * (1 - correction(currentAngle);
+        	double speed_1 = speed * (1 + correction(currentAngle));
+        	double speed_2 = speed * (1 - correction(currentAngle));
         	drive(speed_1, speed_2);
             
         }
         
         else{
-        	double speed_1 = speed * (1 - correction(currentAngle);
-        	double speed_2 = speed * (1 + correction(currentAngle);
+        	double speed_1 = speed * (1 - correction(currentAngle));
+        	double speed_2 = speed * (1 + correction(currentAngle));
         	drive(speed_1, speed_2);
             
         }
