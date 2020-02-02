@@ -32,6 +32,8 @@ class gyro{
     virtual double c_angle();
     void straight (double distance, double velocity);
     void angle_straight(int distance, int speed);
+    void create_straight(int distance, int speed);
+
 
 };
 
