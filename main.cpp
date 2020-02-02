@@ -43,29 +43,29 @@ void demobotSeedings(){
     
 }
 
-//create hard code
+void createSeedings(){
+
 create_connect();
-  enable_servos();
-  set_servo_position(0, 1024);
-  msleep(1000);
-  create_drive_straight(-100);
-  msleep(2000);
-  create_drive_straight(0);
-  msleep(1000);
-  set_servo_position(1, 288);
-  msleep(1000);
-  create_drive_straight(-100);
-  msleep(3000);
-  set_servo_position(1, 1248);
-  msleep(1000);
-  create_drive_straight(-75);
-  msleep(500);
-  set_servo_position(0, 1486);
-  msleep(1500);
-  create_drive_straight(-50);
-  msleep(1000);
-  set_servo_position(0, 1020);
-  msleep(1000);
-  disable_servos();
-  create_disconnect();
+  
+    gyro rawr;
+    
+    create_straight(10, 200);// out of starting box
+    rawr.turn_angle(-90);// turn towards bridge
+    create_straight(10, 200); // move towards bridge
+    
+    //servo repositioning stuff
+    
+    create_straight(7, 170); //under bridge, stops in front of cube blocks
+    
+    // sensor stuff
+    
+    create_straight(7, 170); // back up till it's in front of bridge again
+    rawr.turn_angle(90)// turn towards black processor
+    create_straight(5, 100); // move towards black processor
+    rawr.turn_angle(-90); // turn towards ore storage
+    create_straight(10, 200); // moves straighttowards ore storage while sweeping the tiny ore boxes
+    
+    create_disconnect();
+    
+}
 
