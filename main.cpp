@@ -49,21 +49,21 @@ create_connect();
   
     gyro rawr;
     
-    create_straight(10, 200);// out of starting box
+    rawr.create_straight(10, 200);// out of starting box
     rawr.turn_angle(-90);// turn towards bridge
-    create_straight(10, 200); // move towards bridge
+    rawr.create_straight(10, 200); // move towards bridge
     
     //servo repositioning stuff
     
-    create_straight(7, 170); //under bridge, stops in front of cube blocks
+    rawr.create_straight(7, 170); //under bridge, stops in front of cube blocks
     
     // sensor stuff
     
-    create_straight(7, 170); // back up till it's in front of bridge again
+    rawr.create_straight(7, 170); // back up till it's in front of bridge again
     rawr.turn_angle(90)// turn towards black processor
-    create_straight(5, 100); // move towards black processor
+    rawr.create_straight(5, 100); // move towards black processor
     rawr.turn_angle(-90); // turn towards ore storage
-    create_straight(10, 200); // moves straighttowards ore storage while sweeping the tiny ore boxes
+    rawr.create_straight(10, 200); // moves straighttowards ore storage while sweeping the tiny ore boxes
     
     create_disconnect();
     
