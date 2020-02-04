@@ -32,15 +32,15 @@ auto gyro::duration(){
 
 //making a new clock; instead of a duration function, i'm trying out a time-since function- all of these need to be adjusted so that they don't cause conversion errors
 
-// this is the one with the start argument, just make sure the straight function has a startTime in the first line
-auto timeSince(n_time::time_point start){
-
+auto timeSince(){
+	
+	n_time::time_point start = n_time:now();
 	n_time now = n_time::now();
 	return std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
 
 }
 
-//forget this
+//or
 
 auto time_since(){
 
@@ -50,7 +50,7 @@ auto time_since(){
 
 }
 
-//forget this
+//or
 
 auto currentTime = std::chrono::system_clock::now();
 auto cTime = std::chrono::time_point_cast<std::chrono::milliseconds>(currentTime);
