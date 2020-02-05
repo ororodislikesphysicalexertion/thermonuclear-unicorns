@@ -74,21 +74,6 @@ auto timeSince(n_time::time_point start){
 
 //turn function
 
-// this one doesn't work and sucks
-    void gyro::turn(double t_theta, int l_speed, int r_speed){ //fix
-        
-        double theta = 0.0;
-        mav(0, l_speed);
-        mav(3, r_speed);
-        do{
-            msleep(10);
-            theta += angle_add();  
-        }
-        while(theta < t_theta); 
-        
-        drive(0, 0);
-        msleep(200);
-    }
 
 //this one works and is awesome, just needs some conversion value adjustments
 void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negative is clockwise
