@@ -24,36 +24,14 @@ using n_time = std::chrono::high_resolution_clock;
     n_time::time_point start = n_time::now();
 
 
-auto gyro::duration(){
-        
-        return std::chrono::duration_cast<std::chrono::milliseconds>(c_time-start).count();
-    }
-
-
-//making a new clock; instead of a duration function, i'm trying out a time-since function- all of these need to be adjusted so that they don't cause conversion errors
-
 // this is the one with the start argument, just make sure the straight function has a startTime in the first line
 auto timeSince(n_time::time_point start){
 
-	n_time now = n_time::now();
+	n_time:time_point now = n_time::now();
 	return std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
 
 }
 
-//forget this
-
-auto time_since(){
-
-	n_time::time_point timeNow = n_time::now();
-	n_time::duration current = timeNow.time_since_epoch();
-	return current.count();
-
-}
-
-//forget this
-
-auto currentTime = std::chrono::system_clock::now();
-auto cTime = std::chrono::time_point_cast<std::chrono::milliseconds>(currentTime);
 
 
 //----------------------------------------------------------------------
