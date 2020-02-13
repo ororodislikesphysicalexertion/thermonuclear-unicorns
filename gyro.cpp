@@ -24,7 +24,6 @@ using n_time = std::chrono::high_resolution_clock;
     n_time::time_point start = n_time::now();
 
 
-// this is the one with the start argument, just make sure the straight function has a startTime in the first line
 auto timeSince(n_time::time_point start){
 
 	n_time:time_point now = n_time::now();
@@ -75,7 +74,6 @@ auto timeSince(n_time::time_point start){
 //turn function
 
 
-//this one works and is awesome, just needs some conversion value adjustments
 void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negative is clockwise
         double DEG_TO_RAD = 600;
      	double gyroCurrent = 0;
@@ -128,18 +126,15 @@ void gyro::turn_angle(int angleDegrees) { // positive is counterclockwise, negat
     
 //straight function
 
-// this function WORKS
 void gyro::angle_straight(int distance, int speed){ //enter distance in cm, it gets multiplied by 95.1 to convert to KIPR units
     	n_time::time_point start = n_time::now();
 	double TO_CM = 95.1; //found motor position ticks per centimeter
         int time = ((TO_CM * distance) / std::abs(speed)) * 1000; // milliseconds
         double currentAngle = 0;
-    //    int differenceAngle = std::abs(initialAngle - gyro_z());
         
         while(timeSince(start) < time){
         
         if(speed > 0){
-            //try with normal values first, like 10
         	double speed_1 = speed * (1 + correction(currentAngle));
         	double speed_2 = speed * (1 - correction(currentAngle));
         	drive(speed_1, speed_2);
